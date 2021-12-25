@@ -7,15 +7,11 @@
 
 import Foundation
 
-protocol NetworkMarsRoverServiceDelegate: AnyObject {
-    func didFetchMarsInfo(_: NetworkMarsRoverService, with marsPhoto: MarsPhoto)
-}
 
 class NetworkMarsRoverService {
     
-    weak var delegate: NetworkMarsRoverServiceDelegate?
     
-    func fetchMarsInfo(at date: String) {
+    func fetchMarsInfo(at date: String, complitionHandler: @escaping (MarsPhoto) -> Void) {
         // 1
         let urlString = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=\(date)&api_key=\(apiKey)"
         print(urlString)
@@ -32,8 +28,7 @@ class NetworkMarsRoverService {
         let task = session.dataTask(with: url) { data, response, error in
             if let data = data {
                 if let marsData = self.parseJSON(with: data) {
-                    self.delegate?.didFetchMarsInfo(self, with: marsData)
-                    print(marsData.name)
+                    complitionHandler(marsData)
                 }
             }
         }

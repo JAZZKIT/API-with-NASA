@@ -17,10 +17,6 @@ struct MarsPhoto: Codable {
         }
         name = photoData.rover.name
         
-        imageURL = photoData.imageScr // fetchImage(with: photoData.imageScr)  //.data(using: .utf8)!
+        imageURL = photoData.imageScr
     }
-    
-//    func fetchImage(with url: String) -> Data {
-//        
-//    }
 }
